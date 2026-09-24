@@ -95,7 +95,7 @@ function ImportModal({ onClose, onProcess }: { onClose: () => void; onProcess: (
                 <span className="text-xs text-gray-400">15 observations ready</span>
               </div>
               <button onClick={runProcess} className="w-full bg-gray-900 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors">
-                Process with Nexus
+                Process with Crisis Sync
               </button>
             </div>
           </>
@@ -143,13 +143,6 @@ function Overview({ setPage, setSelectedCluster, clusters, loading }: { setPage:
       {/* Page header */}
       <div className="mb-6">
         <h1 className="text-xl font-semibold text-gray-900">Situation Overview</h1>
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-1 text-sm text-gray-400">
-          <span>Flood Response — Kerala</span>
-          <span className="text-gray-200">·</span>
-          <span>Nexus operational picture</span>
-          <span className="text-gray-200">·</span>
-          <span>Last processed: 11:18 AM</span>
-        </div>
       </div>
 
       {/* Metrics row */}
@@ -172,7 +165,7 @@ function Overview({ setPage, setSelectedCluster, clusters, loading }: { setPage:
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left: cluster cards (2/3 width) */}
         <div className="lg:col-span-2 space-y-3">
-          <SectionLabel>What Nexus Found</SectionLabel>
+          <SectionLabel>What Crisis Sync Found</SectionLabel>
           {clusters.map(c => (
             <button
               key={c.id}
@@ -211,27 +204,6 @@ function Overview({ setPage, setSelectedCluster, clusters, loading }: { setPage:
 
         {/* Right sidebar (1/3 width) */}
         <div className="space-y-5">
-          {/* Needs attention */}
-          <div>
-            <SectionLabel>Needs attention</SectionLabel>
-            <div className="border border-amber-200 bg-amber-50 rounded-xl px-5 py-4 space-y-2.5">
-              {[
-                '2 possible duplicate groups',
-                '3 conflicting observations',
-                '2 clusters awaiting verification',
-              ].map(item => (
-                <button
-                  key={item}
-                  onClick={() => setPage('fusion')}
-                  className="flex items-center gap-2 text-sm text-amber-800 hover:text-amber-900 w-full text-left"
-                >
-                  <span className="text-amber-500 shrink-0">⚠</span>
-                  {item}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Status breakdown */}
           <div>
             <SectionLabel>Cluster status</SectionLabel>
@@ -915,7 +887,7 @@ function ClusterDetail({ clusterId, setPage }: { clusterId: string; setPage: (p:
 
           {/* Fusion reasoning */}
           <div className="border border-[#E4E7EC] bg-white rounded-xl px-6 py-5">
-            <SectionLabel>Why Nexus grouped these reports</SectionLabel>
+            <SectionLabel>Why Crisis Sync grouped these reports</SectionLabel>
             {fusionReasons.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1.5 mb-5">
                 {fusionReasons.map(r => (
@@ -1038,24 +1010,18 @@ function ClusterDetail({ clusterId, setPage }: { clusterId: string; setPage: (p:
             ) : (
               <div>
                 <p className="text-sm text-gray-600 mb-4 leading-relaxed">
-                  Nexus assessment: These observations likely represent the same underlying {(cluster.need || 'need').toLowerCase()}.
+                  Crisis Sync assessment: These observations likely represent the same underlying {(cluster.need || 'need').toLowerCase()}.
                 </p>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="flex flex-col gap-2">
                   <button
                     onClick={() => setVerifyState('confirmed')}
-                    className="col-span-2 flex items-center justify-center gap-1.5 bg-gray-900 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors"
+                    className="flex items-center justify-center gap-1.5 bg-gray-900 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors"
                   >
                     ✓ Confirm cluster
                   </button>
-                  <button className="border border-[#E4E7EC] text-gray-600 px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors">
-                    ✏ Edit
-                  </button>
-                  <button className="border border-[#E4E7EC] text-gray-600 px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors">
-                    Split
-                  </button>
                   <button
                     onClick={() => setVerifyState('rejected')}
-                    className="col-span-2 border border-red-200 text-red-600 px-3 py-2 rounded-lg text-sm hover:bg-red-50 transition-colors"
+                    className="border border-red-200 text-red-600 px-3 py-2 rounded-lg text-sm hover:bg-red-50 transition-colors"
                   >
                     ✕ Reject
                   </button>
@@ -1116,7 +1082,8 @@ export default function App() {
   const { clusters: apiClusters, loading } = useClusters();
   
   useEffect(() => {
-    if (apiClusters.length > 0) console.log('Nexus API Clusters loaded:', apiClusters);
+    document.title = 'Red Cross Crisis Sync';
+    if (apiClusters.length > 0) console.log('Crisis Sync API Clusters loaded:', apiClusters);
   }, [apiClusters]);
 
   const [page, setPage] = useState<Page>('overview')
@@ -1150,8 +1117,8 @@ export default function App() {
               </svg>
             </div>
             <div className="leading-tight">
-              <div className="text-xs font-bold text-red-600 leading-none">REDCROSS</div>
-              <div className="text-xs font-bold text-gray-900 leading-none">NEXUS</div>
+              <div className="text-xs font-bold text-red-600 leading-none whitespace-nowrap">RED CROSS</div>
+              <div className="text-xs font-bold text-gray-900 leading-none whitespace-nowrap">CRISIS SYNC</div>
             </div>
           </button>
 
@@ -1175,10 +1142,6 @@ export default function App() {
 
           {/* Right controls */}
           <div className="flex items-center gap-3 shrink-0">
-            <div className="text-right hidden lg:block">
-              <div className="text-xs font-medium text-gray-600 leading-none">Flood Response Demo</div>
-              <div className="text-[10px] text-gray-400 mt-0.5">Last updated 11:18</div>
-            </div>
             <button
               onClick={() => setShowSubmitReport(true)}
               className="flex items-center gap-1.5 bg-red-600 text-white text-sm px-3 py-1.5 rounded-lg hover:bg-red-700 transition-colors font-medium whitespace-nowrap"
