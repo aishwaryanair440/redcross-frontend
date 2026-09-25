@@ -7,7 +7,7 @@
 
 ## Overview
 
-RedCross Nexus is a real-time situational-awareness tool that aggregates field observations, detects duplicate/conflicting reports via an AI-powered fusion engine, and organises verified needs into prioritised clusters for rapid humanitarian response.
+RedCross Crisis Sync is a real-time situational-awareness tool that aggregates field observations, detects duplicate/conflicting reports via an AI-powered fusion engine, and organises verified needs into prioritised clusters for rapid humanitarian response.
 
 ### Key Views
 
