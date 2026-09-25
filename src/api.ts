@@ -126,17 +126,17 @@ async function request<T>(url: string | URL, options: RequestInit = {}): Promise
 
 export const api = {
   // 1. Reports
-  submitReport: (data: Partial<Report>): Promise<Report> => request<Report>(`${API_BASE_URL}/api/reports`, {
+  submitReport: (data: Partial<Report>): Promise<Report> => request<Report>(`${API_BASE_URL}/reports`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   }),
 
-  getReportStatus: (id: string): Promise<Report> => request<Report>(`${API_BASE_URL}/api/reports/${id}`),
+  getReportStatus: (id: string): Promise<Report> => request<Report>(`${API_BASE_URL}/reports/${id}`),
 
   // 2. Clusters
   getClusters: (params?: Record<string, string | number>): Promise<PaginatedResponse<NeedCluster>> => {
-    const url = new URL(`${API_BASE_URL}/api/clusters`);
+    const url = new URL(`${API_BASE_URL}/clusters`);
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         if (value !== undefined) url.searchParams.append(key, String(value));
@@ -145,15 +145,15 @@ export const api = {
     return request<PaginatedResponse<NeedCluster>>(url.toString());
   },
 
-  getClusterDetail: (id: string): Promise<NeedCluster> => request<NeedCluster>(`${API_BASE_URL}/api/clusters/${id}`),
+  getClusterDetail: (id: string): Promise<NeedCluster> => request<NeedCluster>(`${API_BASE_URL}/clusters/${id}`),
 
 
 
   // 4. Fusion
-  getFusionCandidates: (): Promise<FusionCandidate[]> => request<FusionCandidate[]>(`${API_BASE_URL}/api/fusion`),
+  getFusionCandidates: (): Promise<FusionCandidate[]> => request<FusionCandidate[]>(`${API_BASE_URL}/fusion`),
 
   resolveFusionCandidate: (id: string, action: 'MERGED' | 'KEPT_SEPARATE' | 'DISMISSED'): Promise<FusionCandidate> =>
-    request<FusionCandidate>(`${API_BASE_URL}/api/fusion/${id}/resolve`, {
+    request<FusionCandidate>(`${API_BASE_URL}/fusion/${id}/resolve`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action }),
