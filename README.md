@@ -1,4 +1,4 @@
-# RedCross Nexus — Frontend
+# RedCross Crisis Sync — Frontend
 
 > A humanitarian crisis-intelligence dashboard for field teams and coordinators.  
 > Built with **React 19 · Vite 8 · TypeScript · Tailwind CSS v4**.
